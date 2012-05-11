@@ -8,7 +8,7 @@ class Start {
   ReceivePort _statusPort;
   SendPort _serverPort;
   Server _server;
-  
+
   Start.runServer(Server server, String hostAddress, int tcpPort)
     : _statusPort = new ReceivePort(),
       _serverPort = null,
@@ -23,7 +23,7 @@ class Start {
       _serverPort.send(message, _statusPort.toSendPort());
     });
   }
-  
+
   void shutdown() {
     _serverPort.send(new Message.stop(), _statusPort.toSendPort());
     _statusPort.close();
