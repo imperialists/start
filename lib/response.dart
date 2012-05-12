@@ -23,7 +23,10 @@ class Response {
 
   Response set(name, value) => header(name, value);
 
-  Response type(typecontentType) => set('Content-Type', contentType);
+  String get charset()             => _charset;
+         set charset(String value) => _charset = value;
+
+  Response set type(typecontentType) => set('Content-Type', contentType);
 
   Response cache(String cacheType, [Map options]) {
     if (options == null) {
@@ -36,7 +39,7 @@ class Response {
     return set('Cache-Control', value);
   }
 
-  Response status(code) {
+  Response set status(code) {
     response.statusCode = code;
     return this;
   }
@@ -73,11 +76,15 @@ class Response {
     });
   }
 
-  json(data) {
-    if(data is Map) {
-      data = JSON.stringify(data);
+  json(Object obj, [int statusCode]) {
+    String body = JSON.stringify(obj);
+
+    if (charset == null) {
+      charset = 'utf-8';
     }
-    send(data);
+    set('Content-Type', 'text/javascript');
+
+    return send(body);
   }
 
   redirect(url, [int code = 302]) {

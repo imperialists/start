@@ -9,7 +9,9 @@ class Router {
   parse(req, res) {
     var route = match(req);
     if (route == null) {
-      new Response(res).status(404).send('Not found!');
+      Response response = new Response(res);
+      response.status = 404;
+      response.send('Resource not found');
       return;
     }
     var action = route['action'];
