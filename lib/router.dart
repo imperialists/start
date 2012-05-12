@@ -19,7 +19,6 @@ class Router {
   }
 
   match(req) {
-    print('match ${req.path}');
     String method = req.method;
     var path = req.path;
     var route = routes.filter((route) {

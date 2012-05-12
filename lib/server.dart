@@ -14,6 +14,7 @@ class Server extends Isolate {
   Server() : super() {
     _router = new Router();
     _settings = new Map();
+    _server = new HttpServer();
   }
 
   void stop() {
@@ -27,7 +28,7 @@ class Server extends Isolate {
         _host = message.params['host'];
         _port = message.params['port'];
         replyTo.send('Server starting', null);
-        _server = new HttpServer();
+        //_server = new HttpServer();
         try {
           _server.listen(_host, _port);
           _server.defaultRequestHandler = (HttpRequest req, HttpResponse rsp) =>
@@ -43,6 +44,8 @@ class Server extends Isolate {
       }
     });
   }
+
+  HttpServer get server() => _server;
 
   bool operator [](String setting) {
     return _setting[setting];

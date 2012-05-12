@@ -63,7 +63,7 @@ class Response {
 
   sendfile(path) {
     var file = new File(path);
-    file.exists((found) {
+    file.exists().then((found) {
       if (found) {
         file.openInputStream().pipe(response.outputStream);
       } else {
